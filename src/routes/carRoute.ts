@@ -10,3 +10,5 @@ const carController = new CarController(carService);
 
 const carRouter = Router();
 carRouter.post('/cars', (req, res) => carController.create(req, res));
+
+export default carRouter;
