@@ -7,6 +7,7 @@ const motorcycleMongooseSchema = new Schema<IMotorcycle>({
   year: Number,
   color: String,
   buyValue: Number,
+  category: { type: String, enum: ['Street', 'Custom', 'Trail'] },
   engineCapacity: Number,
 }, { versionKey: false });
 
