@@ -7,18 +7,23 @@ abstract class Service<T> implements Iservice<T> {
     private _model: IModel<T>,
     private _schema: ZodSchema<T>,
   ) {}
-  create(obj: T): Promise<T> {
+  async create(obj: T): Promise<T> {
     const result = this._schema.safeParse(obj);
     if (!result.success) throw result.error;
     return this._model.create(obj);
   }
-  read(): Promise<T[]> {
+  async read(): Promise<T[]> {
     return this._model.read();
   }
-  readOne(_id: string): Promise<T | null> {
+  async readOne(_id: string): Promise<T | null> {
     return this._model.readOne(_id);
   }
-  delete(_id: string): Promise<T | null> {
+  async update(_id: string, obj: T): Promise<T | null> {
+    const result = this._schema.safeParse(obj);
+    if (!result.success) throw result.error;
+    return this._model.update(_id, obj);
+  }
+  async delete(_id: string): Promise<T | null> {
     return this._model.delete(_id);
   }
 }
