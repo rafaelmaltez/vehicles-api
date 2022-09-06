@@ -40,4 +40,48 @@ describe('Car Controller', () => {
     expect((res.json as Sinon.SinonStub).calledWith(carMockWithId)).to.be.true
   });
 
+  it('lista todos os carros com  sucesso', async () => {
+    const { req, res } = makeParams()
+    const { carController, carService } = makeSut()
+
+    sinon.stub(carService, 'read').resolves([carMockWithId, carMockWithId])
+    await carController.read(req, res)
+
+    expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true
+    expect((res.json as Sinon.SinonStub).calledWith([carMockWithId, carMockWithId])).to.be.true
+  });
+
+  it('lista um carro especifico com sucesso', async () => {
+    const { res } = makeParams()
+    const { carController, carService } = makeSut()
+    const req = { params: { id: 'any_id' } } as  Request & { params: { id: string } }
+    sinon.stub(carService, 'readOne').resolves(carMockWithId)
+    await carController.readOne(req, res)
+
+    expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true
+    expect((res.json as Sinon.SinonStub).calledWith(carMockWithId)).to.be.true
+  });
+
+  it('atualiza um  carro com sucesso', async () => {
+    const {  res } = makeParams()
+    const { carController, carService } = makeSut()
+    const req = { body: carMock, params: { id: 'any_id' } } as  Request & { params: { id: string } }
+    sinon.stub(carService, 'update').resolves(carMockWithId)
+    await carController.update(req, res)
+
+    expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true
+    expect((res.json as Sinon.SinonStub).calledWith(carMockWithId)).to.be.true
+  });
+
+  it('deleta um  carro com sucesso', async () => {
+    const {  res } = makeParams()
+    const { carController, carService } = makeSut()
+    const req = { params: { id: 'any_id' } } as  Request & { params: { id: string } }
+    res.sendStatus = sinon.stub()
+    sinon.stub(carService, 'delete').resolves(carMockWithId)
+    await carController.delete(req, res)
+
+    expect((res.sendStatus as sinon.SinonStub).calledWith(204)).to.be.true
+  });
+
 });
