@@ -8,4 +8,9 @@ export default abstract class Controller<T> {
     const result = await this.service.create(req.body);
     return res.status(201).json(result);
   }
+
+  public async read(req: Request, res: Response) {
+    const result = await this.service.read();
+    return res.status(200).json(result);
+  }
 }
