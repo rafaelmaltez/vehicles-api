@@ -13,4 +13,12 @@ export default abstract class Controller<T> {
     const result = await this.service.read();
     return res.status(200).json(result);
   }
+
+  public async readOne(
+    req: Request & { params: { id: string } },
+    res: Response,
+  ) {
+    const result = await this.service.readOne(req.params.id);
+    return res.status(200).json(result);
+  }
 }
