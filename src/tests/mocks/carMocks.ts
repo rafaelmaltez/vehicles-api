@@ -11,7 +11,7 @@ export const carMock: ICar = {
 }
 
 export const carMockWithId: ICar & { _id: string } = {
-  _id: '62cf1fc6498565d94eba52cd',
+  _id: 'valid_id',
   model: 'mock_01',
   year: 2022,
   color: 'black',

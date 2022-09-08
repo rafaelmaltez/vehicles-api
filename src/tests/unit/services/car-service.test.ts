@@ -1,13 +1,12 @@
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 const { expect } = chai;
-import { ZodError } from 'zod';
+import { SafeParseError } from 'zod';
 import CarService from '../../../services/CarService';
 import CarModel from '../../../models/CarModel';
 import { carZodSchema } from '../../../interfaces/ICar';
 import { carMock, carMockWithId } from '../../mocks/carMocks';
-import { SafeParseReturnType } from 'zod';
 
 chai.use(chaiAsPromised)
 
@@ -30,7 +29,7 @@ describe('CarService', () => {
   })
   it('dispara um erro caso valores invalidos sejam passados', async () => {
     const { carService } = makeSut()
-    sinon.stub(carZodSchema, 'safeParse').returns({ success: false, error: new ZodError<any>([])})
+    sinon.stub(carZodSchema, 'safeParse').returns({ success: false,} as SafeParseError<any>)
     const promise = carService.create(carMock)
     return expect(promise).to.eventually.be.rejected
   })
@@ -57,7 +56,7 @@ describe('CarService', () => {
 
   it('dispara um erro ao atualizar caso valores invalidos sejam passados', async () => {
     const { carService } = makeSut()
-    sinon.stub(carZodSchema, 'safeParse').returns({ success: false, error: new ZodError<any>([])})
+    sinon.stub(carZodSchema, 'safeParse').returns({ success: false,} as SafeParseError<any>)
     const promise = carService.update('62cf1fc6498565d94eba52cd', carMock)
     return expect(promise).to.eventually.be.rejected
   })
