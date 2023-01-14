@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Car Shop Docker",
+      "name": "Vehicles Api Docker",
       "port": 9229,
       "address": "localhost",
       "localRoot": "${workspaceFolder}",
